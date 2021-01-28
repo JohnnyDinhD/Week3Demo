@@ -25,6 +25,18 @@ public class HelloWorldServlet extends HttpServlet {
         String firstname = request.getParameter("firstname");
         String lastname = request.getParameter("lastname");
         
+        /**
+         * make sure firstname == null comes first before the .equals
+         * requestDispatchers usually go at the end of the doGet or doPost
+        */
+        if (firstname == null || firstname.equals("") || lastname == null || lastname.equals("")) {
+            getServletContext().getRequestDispatcher("/WEB-INF/helloWorldForm.jsp")
+                    .forward(request, response);
+            
+            return; //stops executing the code here if it equals this
+        }
+            
+        
         //reference in the parameter the variable name from the getParameter
         request.setAttribute("firstname", firstname);
         request.setAttribute("lastname", lastname);
